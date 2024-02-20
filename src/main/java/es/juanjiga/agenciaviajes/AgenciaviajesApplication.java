@@ -43,9 +43,9 @@ public class AgenciaviajesApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		//var fly = flyRepository.findById(10L).get();
+		var fly = flyRepository.findById(10L).get();
 
-		//var hotel = hotelRepository.findById(9L).get();
+		var hotel = hotelRepository.findById(9L).get();
 
 		//var ticket = ticketRepository.findById(UUID.fromString("22345678-1234-5678-3235-567812345678")).get();
 
@@ -53,9 +53,9 @@ public class AgenciaviajesApplication implements CommandLineRunner{
 		
 		//var customer = customerRepository.findById("GOTW771012HMRGR087").get();
 
-		//log.info(String.valueOf(fly));
+		log.info(String.valueOf(fly));
 
-		//log.info(String.valueOf(hotel));
+		log.info(String.valueOf(hotel));
 
 		//log.info(String.valueOf(ticket));
 
@@ -81,10 +81,11 @@ public class AgenciaviajesApplication implements CommandLineRunner{
 		System.out.println(".....Hoteles con mas de 3 estrellas");
 		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
 
-		var fly = flyRepository.findById(1L).get();
-		System.out.println(fly);
+		var fly2 = flyRepository.findById(1L).get();
+		System.out.println(fly2);
 
-		fly.getTickets().forEach(ticket -> System.out.println(ticket));
+		fly2.getTickets().forEach(ticket -> System.out.println(ticket));
+
 		
 
 		
