@@ -78,13 +78,15 @@ public class AgenciaviajesApplication implements CommandLineRunner{
 	    hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(System.out::println);
 		System.out.println(".....Hoteles con precio entre de 100 y 200 dolares");
 		hotelRepository.findByPriceBetween(BigDecimal.valueOf(100), BigDecimal.valueOf(200)).forEach(System.out::println);
-		System.out.println(".....Hoteles con mas de 3 estrellas");
-		hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);
+		System.out.println(":::::::::::::::...Hoteles con mas de 4 estrellas");
+		hotelRepository.findByRatingGreaterThan(4).forEach(System.out::println);
 
 		var fly2 = flyRepository.findById(1L).get();
 		System.out.println(fly2);
 
 		fly2.getTickets().forEach(ticket -> System.out.println(ticket));
+
+		System.out.println("::::::::::::::::::::::::::::::::::::::::::::");
 
 		
 

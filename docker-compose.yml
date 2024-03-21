@@ -1,10 +1,23 @@
 version: '3.8'
 
 services:
+  app:
+    image: agencia-viajes
+    build:
+      context: .
+    container_name: agenciapp
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://agenciadb:5432/agenciaviajesdb
+      - SPRING_DATASOURCE_USERNAME=juan
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_DATASOURCE_HIKARI_CONNECTION-TIMEOUT=2000
+      - SPRING_DATASOURCE_HIKARI_MAXIMUN_POOL_SIZE=5
 
   db:
-    image: postgres:15.2
-    container_name: agenciaviajes
+    image: postgres:9-alpine
+    container_name: agenciadb
     restart: always
     volumes:
       - ./db/sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
