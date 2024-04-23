@@ -1,24 +1,68 @@
 package es.juanjiga.agenciaviajes.infrastructure.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-import es.juanjiga.agenciaviajes.api.models.request.TicketRequest;
-import es.juanjiga.agenciaviajes.api.models.response.TicketResponse;
-import es.juanjiga.agenciaviajes.infrastructure.abstract_services.ITicketService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+import es.juanjiga.agenciaviajes.api.models.request.TicketRequest;
+import es.juanjiga.agenciaviajes.api.models.response.FlyResponse;
+import es.juanjiga.agenciaviajes.api.models.response.TicketResponse;
+import es.juanjiga.agenciaviajes.domain.entities.TicketEntity;
+import es.juanjiga.agenciaviajes.domain.repositories.CustomerRepository;
+import es.juanjiga.agenciaviajes.domain.repositories.FlyRepository;
+import es.juanjiga.agenciaviajes.domain.repositories.TicketRepository;
+import es.juanjiga.agenciaviajes.infrastructure.abstract_services.ITicketService;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Transactional
+@Slf4j
 public class TicketService implements ITicketService {
+
+    private final FlyRepository flyRepository;
+    private final CustomerRepository customerRepository;
+    private final TicketRepository ticketRepository;
+
+    public TicketService(FlyRepository flyRepository, CustomerRepository customerRepository,
+            TicketRepository ticketRepository) {
+        this.flyRepository = flyRepository;
+        this.customerRepository = customerRepository;
+        this.ticketRepository = ticketRepository;
+    }
 
     @Override
     public TicketResponse create(TicketRequest request) {
-        // TODO Auto-generated method stub
-        return null;
+
+        var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+        var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
+
+        var ticketToPersist = TicketEntity.builder()
+                .id(UUID.randomUUID())
+                .fly(fly)
+                .customer(customer)
+                .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+                .purchaseDate(LocalDate.now())
+                .arrivalDate(LocalDateTime.now())
+                .departureDate(LocalDateTime.now())
+                .build();
+
+        var TicketPersisted = this.ticketRepository.save(ticketToPersist);
+
+        log.info("Ticket saved whith id:{}", TicketPersisted.getId());
+
+        return this.entityToResponse(TicketPersisted);
     }
 
-    
     @Override
     public TicketResponse read(UUID id) {
-        // TODO Auto-generated method stub
-        return null;
+
+        var ticketFromDB = this.ticketRepository.findById(id).orElseThrow();
+        return this.entityToResponse(ticketFromDB);
     }
 
     @Override
@@ -30,8 +74,17 @@ public class TicketService implements ITicketService {
     @Override
     public void delete(UUID id) {
         // TODO Auto-generated method stub
-        
+
     }
 
-    
+    private TicketResponse entityToResponse(TicketEntity entity) {
+        var response = new TicketResponse();
+        BeanUtils.copyProperties(entity, response);
+        var flyResponse = new FlyResponse();
+        BeanUtils.copyProperties(entity.getFly(), flyResponse);
+        response.setFly(flyResponse);
+        return response;
+
+    }
+
 }

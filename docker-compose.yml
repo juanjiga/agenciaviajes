@@ -18,7 +18,6 @@ services:
   db:
     image: postgres:9-alpine
     container_name: agenciadb
-    restart: always
     volumes:
       - ./db/postgres/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
       - ./db/postgres/data.sql:/docker-entrypoint-initdb.d/data.sql
