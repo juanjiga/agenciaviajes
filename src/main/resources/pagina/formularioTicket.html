@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="formularioTicket.css">
+    <title>Document</title>
+</head>
+<body>
+  <div class="formbold-main-wrapper">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    <div class="formbold-form-wrapper">
+      
+      <img src="rest.png"  width="480" height="380">
+  
+      <!-- <form action="https://formbold.com/s/FORM_ID" method="POST">-->
+      <form method='POST'></form>
+      
+        <div class="formbold-form-title">
+          <h2 class="">Registrar Ticket</h2>
+          <p>
+           Introducir el cliente y el vuelo
+          </p>
+        </div>
+        <div class="formbold-input-flex">
+          <div>
+            <label for="DNICliente" class="formbold-form-label"> DNI Cliente </label>
+            <input
+              type="text"
+              name="DNICliente"
+              id="idClient"
+              class="formbold-form-input"
+            />
+          </div>
+          <div>
+            <label for="numeroVuelo" class="formbold-form-label"> Número de Vuelo </label>
+            <input
+              type="text"
+              name="numeroVuelo"
+              id="idFly"
+              class="formbold-form-input"
+            />
+          </div>
+        </div>
+        <div> 
+          <button id="btnGuardar" class="formbold-btn"> Guardar </button>
+        </div>   
+      </form>
+    </div>
+  </div>
+
+  <script src="formularioTicket.js"></script>
+  
+</body>
+</html>
