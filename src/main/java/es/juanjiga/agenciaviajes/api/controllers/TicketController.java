@@ -20,7 +20,7 @@ public class TicketController {
 
     private final ITicketService ticketService;
 
-   // @CrossOrigin("http://127.0.0.1:5500")
+    @CrossOrigin("http://127.0.0.1:5500")
     @PostMapping
     public ResponseEntity<TicketResponse> post(@RequestBody TicketRequest request) {
 
