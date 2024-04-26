@@ -10,7 +10,7 @@ import es.juanjiga.agenciaviajes.api.models.response.TicketResponse;
 import es.juanjiga.agenciaviajes.infrastructure.abstract_services.ITicketService;
 import lombok.AllArgsConstructor;
 
-// import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
