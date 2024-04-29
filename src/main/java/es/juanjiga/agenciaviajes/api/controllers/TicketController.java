@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 
 //import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -35,9 +37,22 @@ public class TicketController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<TicketResponse> get(@PathVariable UUID id) {
+        
         return ResponseEntity.ok(ticketService.read(id));
     }
     
-    
+    @PutMapping(path = "{id}")
+    public ResponseEntity<TicketResponse> put(@PathVariable UUID id, @RequestBody TicketRequest request){
 
+        return ResponseEntity.ok(this.ticketService.update(request, id));
+    } 
+
+    @DeleteMapping(path = "{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+
+        this.ticketService.delete(id);
+        
+        return ResponseEntity.noContent().build();
+    }
+    
 }
