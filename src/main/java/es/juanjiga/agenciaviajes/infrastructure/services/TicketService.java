@@ -77,6 +77,16 @@ public class TicketService implements ITicketService {
 
     }
 
+    @Override
+    public BigDecimal findPrice(Long idFly) {
+        var fly = this.flyRepository.findById(idFly).orElseThrow();
+
+        return fly.getPrice();
+    }
+
+
+    
+
     private TicketResponse entityToResponse(TicketEntity entity) {
         var response = new TicketResponse();
         BeanUtils.copyProperties(entity, response);
@@ -87,4 +97,5 @@ public class TicketService implements ITicketService {
 
     }
 
+   
 }

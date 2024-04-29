@@ -1,6 +1,7 @@
 package es.juanjiga.agenciaviajes.domain.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,6 +30,8 @@ public class ReservationEntity implements Serializable {
     private LocalDateTime dateTimeReservation;
     private LocalDate dateStart;
     private LocalDate dateEnd;
+    private Integer totalDays;
+    private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
