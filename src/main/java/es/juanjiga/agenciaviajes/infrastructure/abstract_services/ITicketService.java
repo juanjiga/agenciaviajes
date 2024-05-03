@@ -8,5 +8,5 @@ import es.juanjiga.agenciaviajes.api.models.response.TicketResponse;
 
 public interface ITicketService extends CrudService<TicketRequest, TicketResponse, UUID>{
     
-    BigDecimal findPrice(Long idFly);
+    BigDecimal findPrice(Long flyId);
 }
