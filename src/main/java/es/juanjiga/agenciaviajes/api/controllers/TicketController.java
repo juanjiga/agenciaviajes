@@ -58,6 +58,7 @@ public class TicketController {
         
         return ResponseEntity.noContent().build();
     }
+    
 
     @GetMapping
     public ResponseEntity<Map<String, BigDecimal>> getFlyPrice(@RequestParam Long flyId) {
