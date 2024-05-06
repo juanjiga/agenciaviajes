@@ -1,4 +1,4 @@
-package com.debuggeando_ideas.best_travel.util;
+package es.juanjiga.agenciaviajes.util;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -17,7 +17,7 @@ public class BestTravelUtil {
     }
 
     public static LocalDateTime getRandomLatter() {
-        var randomHours = random.nextInt(12 -6) + 6;
+        var randomHours = random.nextInt(12 - 6) + 6;
         var now = LocalDateTime.now();
         return now.plusHours(randomHours);
     }
