@@ -2,7 +2,9 @@ package es.juanjiga.agenciaviajes.infrastructure.services;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,18 +32,17 @@ public class FlyService implements IFlyService {
        switch (sortType) {
         case NONE -> pageRequest = PageRequest.of(page, size);
         case LOWER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
-        case UPPER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
-        
-            
-         
+        case UPPER -> pageRequest = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());      
        }
-        return this.flyRepository.findAll(pageRequest).map(this.entityToResponse);
+        return this.flyRepository.findAll(pageRequest).map(this::entityToResponse);
     }
 
     @Override
     public Set<FlyResponse> readLessPrice(BigDecimal price) {
-        // TODO Auto-generated method stub
-        return null;
+        return this.flyRepository.selectLessPrice(price)
+                .stream()
+                .map(this::entityToResponse)
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class FlyService implements IFlyService {
 
     private FlyResponse entityToResponse(FlyEntity entity){
         FlyResponse response = new FlyResponse();
-        BeanUtil copyProperties(entity, response);
+        BeanUtils.copyProperties(entity, response);
         return response;
     }
     
