@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-public class BestTravelUtil {
+public class AgenciaViajesUtil {
 
     private static final Random random = new Random();
 

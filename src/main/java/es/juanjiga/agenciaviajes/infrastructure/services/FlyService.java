@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import es.juanjiga.agenciaviajes.api.models.response.FlyResponse;
 import es.juanjiga.agenciaviajes.domain.entities.FlyEntity;
 import es.juanjiga.agenciaviajes.domain.repositories.FlyRepository;
@@ -26,6 +25,7 @@ public class FlyService implements IFlyService {
 
     private final FlyRepository flyRepository;
 
+    @SuppressWarnings("null")
     @Override
     public Page<FlyResponse> readAll(Integer page, Integer size, SortType sortType) {
        PageRequest pageRequest = null;
