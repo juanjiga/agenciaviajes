@@ -46,16 +46,24 @@ public class FlyService implements IFlyService {
     }
 
     @Override
-    public Set<FlyResponse> readByOriginDestiny(String origin, String destiny) {
-        // TODO Auto-generated method stub
-        return null;
+    public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
+        return this.flyRepository.selectBetweenPrice(min, max)
+                .stream()
+                .map(this::entityToResponse)
+                .collect(Collectors.toSet());
     }
 
+   
+
     @Override
-    public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
-        // TODO Auto-generated method stub
-        return null;
+    public Set<FlyResponse> readByOriginDestiny(String origin, String destiny) {
+        return this.flyRepository.selectOriginDestiny(origin, destiny)
+                .stream()
+                .map(this::entityToResponse)
+                .collect(Collectors.toSet());
     }
+
+   
 
     private FlyResponse entityToResponse(FlyEntity entity){
         FlyResponse response = new FlyResponse();
