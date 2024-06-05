@@ -10,9 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import es.juanjiga.agenciaviajes.api.models.response.FlyResponse;
 import es.juanjiga.agenciaviajes.api.models.response.HotelResponse;
-import es.juanjiga.agenciaviajes.domain.entities.FlyEntity;
 import es.juanjiga.agenciaviajes.domain.entities.HotelEntity;
 import es.juanjiga.agenciaviajes.domain.repositories.HotelRepository;
 import es.juanjiga.agenciaviajes.infrastructure.abstract_services.IHotelService;
@@ -30,7 +28,9 @@ public class HotelService implements IHotelService {
     private final HotelRepository hotelRepository;
 
 
-       public Page<HotelResponse> readAll(Integer page, Integer size, SortType sortType) {
+    @SuppressWarnings("null")
+    @Override
+    public Page<HotelResponse> readAll(Integer page, Integer size, SortType sortType) {
        PageRequest pageRequest = null;
        switch (sortType) {
         case NONE -> pageRequest = PageRequest.of(page, size);
@@ -64,6 +64,18 @@ public class HotelService implements IHotelService {
                .collect(Collectors.toSet());
         
     }
+
+    @Override
+    public Set<HotelResponse> readByRating(Integer rating) {
+        return this.hotelRepository.findByRatingGreaterThan(rating)
+               .stream()
+               .map(this::entityToResponse)
+               .collect(Collectors.toSet());
+        
+    }
+
+
+    
 
     private HotelResponse entityToResponse(HotelEntity entity){
         HotelResponse response = new HotelResponse();

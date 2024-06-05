@@ -12,51 +12,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.juanjiga.agenciaviajes.api.models.response.HotelResponse;
-import es.juanjiga.agenciaviajes.infrastructure.services.HotelService;
+import es.juanjiga.agenciaviajes.api.models.response.FlyResponse;
+import es.juanjiga.agenciaviajes.infrastructure.abstract_services.IFlyService;
 import es.juanjiga.agenciaviajes.util.SortType;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(path = "hotel")
+@RequestMapping(path = "fly")
 @AllArgsConstructor
-public class HotelController {
+public class FlyController {
 
-    private final HotelService hotelService;
+    private final IFlyService flyService;
 
     @GetMapping
-    public ResponseEntity<Page<HotelResponse>> getAll(
+    public ResponseEntity<Page<FlyResponse>> getAll(
             @RequestParam Integer page,
             @RequestParam Integer size,
             @RequestHeader(required = false) SortType sortType) {
         if (Objects.isNull(sortType)) sortType = SortType.NONE;
-        var response = this.hotelService.readAll(page, size, sortType);
+        var response = this.flyService.readAll(page, size, sortType);
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
-     @GetMapping(path = "less_price")
-    public ResponseEntity<Set<HotelResponse>> getLessPrice(
+    @GetMapping(path = "less_price")
+    public ResponseEntity<Set<FlyResponse>> getLessPrice(
             @RequestParam BigDecimal price) {
-        var response = this.hotelService.readLessPrice(price);
+        var response = this.flyService.readLessPrice(price);
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "between_price")
-    public ResponseEntity<Set<HotelResponse>> getBetweenPrice(
+    public ResponseEntity<Set<FlyResponse>> getBetweenPrice(
             @RequestParam BigDecimal min,
             @RequestParam BigDecimal max) {
-        var response = this.hotelService.readBetweenPrices(min, max);
+        var response = this.flyService.readBetweenPrices(min, max);
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
-    @GetMapping(path = "rating")
-    public ResponseEntity<Set<HotelResponse>> getByRating(
-            @RequestParam Integer rating) {
-                if(rating > 4) rating = 4;
-                if(rating < 1) rating = 1;
-        var response = this.hotelService.readByRating(rating);
+    @GetMapping(path = "origin_destiny")
+    public ResponseEntity<Set<FlyResponse>> getByOriginDestiny(
+            @RequestParam String origin,
+            @RequestParam String destiny) {
+        var response = this.flyService.readByOriginDestiny(origin, destiny);
         return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
-    
     
 }
