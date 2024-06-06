@@ -12,5 +12,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class TourFlyRequest implements Serializable{
+
     public Long id;
+    
 }
